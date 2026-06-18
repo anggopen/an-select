@@ -40,7 +40,7 @@ body{background:var(--white);color:var(--black);font-family:'DM Sans','Noto Sans
 
 /* 縮圖列 */
 .thumb-row{display:flex;gap:1px;background:var(--border);border-top:1px solid var(--border)}
-.thumb{flex:1;aspect-ratio:1;background:var(--gray);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:opacity .2s;font-size:20px;opacity:0.3}
+.thumb{flex:1;aspect-ratio:1;background:var(--gray);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:opacity .2s;font-size:20px;opacity:1}
 .thumb:hover,.thumb.on{opacity:1;background:var(--light)}
 .thumb img{width:100%;height:100%;object-fit:cover}
 
@@ -142,17 +142,29 @@ body{background:var(--white);color:var(--black);font-family:'DM Sans','Noto Sans
   <div class="product-gallery">
     <div class="main-img">
       <!-- 有圖片時取消下面註解，刪掉 icon 和 hint -->
-       <img src="images/product-01.jpg" alt="客製化馬克杯"> 
+       <img src="images/product-01.jpg" alt="現貨/線條小狗小蝴蝶吊飾"> 
       <div class="images/product-01.jpg">放上主圖（建議 800x800px）</div>
     </div>
     <!-- 縮圖列（最多放4張，沒有就刪掉這整個 thumb-row） -->
     <div class="thumb-row">
-      <div class="thumb on">☕</div><!-- 換成 <img src="..."> -->
-      <div class="thumb">☕</div>
-      <div class="thumb">☕</div>
-      <div class="thumb">☕</div>
+
+    <div class="thumb on">
+        <img src="images/product-01-1.jpg" alt="縮圖1">
     </div>
-  </div>
+
+    <div class="thumb">
+        <img src="images/product-01-2.jpg" alt="縮圖2">
+    </div>
+
+    <div class="thumb">
+        <img src="images/product-01-3.jpg" alt="縮圖3">
+    </div>
+
+    <div class="thumb">
+        <img src="images/product-01-4.jpg" alt="縮圖4">
+    </div>
+    </div>
+</div>
 
   <!-- 右：商品資訊 -->
   <div class="product-info">
