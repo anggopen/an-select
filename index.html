@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AN Select｜韓系選物 × 客製化小物</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@200;300;400&family=Noto+Sans+TC:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--black:#2e2b27;--white:#ffffff;--gold:#b8933a;--gray:#f7f5f2;--border:#ece8e2;--mid:#a09890;--light:#f9f7f4}
+body{background:var(--white);color:var(--black);font-family:'DM Sans','Noto Sans TC',sans-serif;min-height:100vh;overflow-x:hidden}
+
+.nav{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid var(--border);padding:0 48px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.18em;color:var(--black);text-decoration:none}
+.logo-dot{color:var(--gold)}
+.nav-menu{display:flex;gap:32px}
+.nav-menu a{font-size:11px;letter-spacing:0.12em;color:var(--mid);text-decoration:none;cursor:pointer;transition:color .2s}
+.nav-menu a:hover{color:var(--black)}
+.nav-action{font-size:11px;letter-spacing:0.1em;color:var(--black);border:1px solid var(--black);padding:6px 16px;cursor:pointer;transition:all .2s;background:transparent;font-family:'DM Sans',sans-serif;text-decoration:none}
+.nav-action:hover{background:var(--black);color:var(--white)}
+
+.hero{padding:80px 48px 64px;display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:end;border-bottom:1px solid var(--border)}
+.hero-eyebrow{font-size:10px;letter-spacing:0.28em;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--gold)}
+.hero-h1{font-family:'Bebas Neue',sans-serif;font-size:88px;line-height:0.92;letter-spacing:0.04em;color:var(--black);margin-bottom:28px}
+.hero-h1 .gold{color:var(--gold)}
+.hero-sub{font-size:12px;color:var(--mid);letter-spacing:0.06em;line-height:1.9;font-weight:200;max-width:280px}
+.hero-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;padding-bottom:4px}
+.hero-stat-num{font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:0.06em;color:var(--black);line-height:1}
+.hero-stat-label{font-size:9px;letter-spacing:0.2em;color:var(--mid);text-align:right}
+
+.marquee-wrap{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:11px 0;overflow:hidden;background:var(--gray)}
+.marquee{display:flex;gap:48px;animation:scroll 18s linear infinite;white-space:nowrap}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.marquee span{font-size:11px;letter-spacing:0.2em;color:var(--mid);flex-shrink:0}
+.marquee span.g{color:var(--gold)}
+
+.filter{padding:40px 48px 24px;display:flex;align-items:center;justify-content:space-between}
+.filter-left{display:flex}
+.f-btn{padding:8px 20px;font-size:10px;letter-spacing:0.12em;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--mid);transition:all .2s;margin-right:-1px;font-family:'DM Sans',sans-serif}
+.f-btn:hover{color:var(--black);border-color:var(--black);z-index:1;position:relative}
+.f-btn.on{background:var(--black);color:var(--white);border-color:var(--black);z-index:1;position:relative}
+.filter-count{font-size:10px;letter-spacing:0.1em;color:var(--mid)}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin:0 48px;border:1px solid var(--border)}
+.card{background:var(--white);cursor:pointer;position:relative;overflow:hidden;text-decoration:none;color:inherit;display:block}
+.card:hover .card-img-inner{transform:scale(1.03)}
+.card:hover .hover-label{opacity:1}
+.card-img{width:100%;aspect-ratio:1;background:var(--light);overflow:hidden;position:relative}
+.card-img-inner{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:transform .4s ease}
+.card-img-inner img{width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0}
+.icon{font-size:48px;opacity:0.18}
+.img-hint{font-size:9px;letter-spacing:0.14em;color:#c8c0b8}
+.badge{position:absolute;top:16px;left:16px;font-size:8px;letter-spacing:0.14em;padding:4px 10px;background:var(--black);color:var(--white);z-index:2}
+.badge.gold{background:var(--gold);color:var(--white)}
+.hover-label{position:absolute;bottom:0;left:0;right:0;background:var(--black);color:var(--white);text-align:center;padding:12px;font-size:10px;letter-spacing:0.18em;opacity:0;transition:opacity .25s;z-index:2}
+
+.card-body{padding:18px 20px 22px}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.cat{font-size:11px;letter-spacing:0.2em;color:var(--gold)}
+.card-num{font-size:9px;color:#d8d0c8;letter-spacing:0.1em}
+.name{font-size:14px;font-weight:400;color:var(--black);margin-bottom:4px;line-height:1.35}
+.desc{font-size:10px;color:#b8b0a8;line-height:1.65;margin-bottom:14px;font-weight:200}
+.price{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.06em;color:var(--black)}
+.price-note{font-size:9px;color:#c8c0b8;font-family:'DM Sans',sans-serif;margin-top:2px}
+
+.banner{margin:1px 48px 0;background:var(--gray);border:1px solid var(--border);padding:48px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:32px}
+.banner-title{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:0.06em;color:var(--black);line-height:1;margin-bottom:10px}
+.banner-title em{color:var(--gold);font-style:normal}
+.banner p{font-size:11px;color:var(--mid);line-height:1.8;letter-spacing:0.04em;font-weight:200}
+.banner-btn{flex-shrink:0;padding:14px 32px;background:var(--black);color:var(--white);border:none;font-size:10px;letter-spacing:0.18em;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;text-decoration:none;display:inline-block}
+.banner-btn:hover{opacity:0.75}
+
+.footer{padding:36px 48px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);margin-top:1px}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.18em;color:#c8c0b8}
+.footer-logo span{color:var(--gold)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{font-size:10px;letter-spacing:0.1em;color:var(--mid);text-decoration:none}
+.footer-links a:hover{color:var(--black)}
+.footer-right{font-size:9px;color:#c8c0b8;letter-spacing:0.08em;line-height:1.8;text-align:right}
+
+@media(max-width:768px){
+  .nav{padding:0 20px}.nav-menu{display:none}
+  .hero{padding:48px 20px 40px;grid-template-columns:1fr}.hero-right{display:none}.hero-h1{font-size:64px}
+  .marquee-wrap{display:none}
+  .filter{padding:24px 20px 16px;flex-direction:column;gap:12px;align-items:flex-start}
+  .grid{grid-template-columns:repeat(2,1fr);margin:0 20px}
+  .banner{margin:1px 20px 0;padding:28px 20px;grid-template-columns:1fr}.banner-btn{width:100%;text-align:center}
+  .footer{padding:24px 20px;flex-direction:column;gap:16px;text-align:center}.footer-links{flex-wrap:wrap;justify-content:center}.footer-right{text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="logo" href="index.html">AN<span class="logo-dot">·</span>SELECT</a>
+  <div class="nav-menu">
+    <a href="index.html">全部商品</a>
+    <a href="index.html">A.N嚴選</a>
+    <a href="index.html">寵物選品</a>
+    <a href="index.html">專屬客製</a>
+  </div>
+  <a href="https://line.me/你的群組連結" target="_blank" class="nav-action">LINE 詢問</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">KOREAN STYLE · CURATED SHOP</div>
+    <div class="hero-h1">AN<br><span class="gold">SE</span>LE<br>CT</div>
+    <div class="hero-sub">韓系選物 × 客製化小物<br>每件都是用心挑過的<br>自用或送禮，都值得</div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stat-num">선물</div>
+    <div class="hero-stat-label">GIFT · CURATED · CUSTOM</div>
+  </div>
+</div>
+
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span>AN SELECT</span><span class="g">✦</span><span>CURATED SHOP</span><span class="g">✦</span><span>客製化小物</span><span class="g">✦</span><span>用心選物</span><span class="g">✦</span><span>送禮首選</span><span class="g">✦</span>
+    <span>AN SELECT</span><span class="g">✦</span><span>CURATED SHOP</span><span class="g">✦</span><span>客製化小物</span><span class="g">✦</span><span>用心選物</span><span class="g">✦</span><span>送禮首選</span><span class="g">✦</span>
+    <span>AN SELECT</span><span class="g">✦</span><span>CURATED SHOP</span><span class="g">✦</span><span>客製化小物</span><span class="g">✦</span><span>用心選物</span><span class="g">✦</span><span>送禮首選</span><span class="g">✦</span>
+  </div>
+</div>
+
+<div class="filter">
+  <div class="filter-left">
+    <button class="f-btn on">全部商品</button>
+    <button class="f-btn">A.N嚴選</button>
+    <button class="f-btn">寵物選品</button>
+    <button class="f-btn">專屬客製</button>
+  </div>
+  <div class="filter-count">6 件商品</div>
+</div>
+
+<div class="grid">
+
+  <!-- ===== 商品 001 ===== 把 href 改成 product-01.html -->
+  <a class="card" href="product-01.html">
+    <div class="card-img">
+      <div class="badge">NEW</div>
+      <div class="card-img-inner">
+        <!-- <img src="images/product-01.jpg" alt="現貨/線條小狗小蝴蝶吊飾"> -->
+        <div class="icon">☕</div>
+        <div class="img-hint">放上商品圖片</div>
+      </div>
+      <div class="hover-label">查看商品 →</div>
+    </div>
+    <div class="card-body">
+      <div class="card-top"><div class="cat">A.N嚴選</div><div class="card-num">001</div></div>
+      <div class="name">現貨/線條小狗小蝴蝶吊飾</div>
+      <div class="desc">可印照片、文字或插圖<br>送禮最有心意</div>
+      <div class="price">NT$ 299</div>
+      <div class="price-note">299</div>
+    </div>
+  </a>
+
+  <!-- ===== 商品 002 ===== -->
+  <a class="card" href="product-02.html">
+    <div class="card-img">
+      <div class="badge">NEW</div>
+      <div class="card-img-inner">
+        <!-- <img src="images/product-02.jpg" alt="商品名稱"> -->
+        <div class="icon">🫖</div>
+        <div class="img-hint">放上商品圖片</div>
+      </div>
+      <div class="hover-label">查看商品 →</div>
+    </div>
+    <div class="card-body">
+      <div class="card-top"><div class="cat">專屬客製</div><div class="card-num">002</div></div>
+      <div class="name">商品名稱</div>
+     <div class="desc">可印照片、文字或插圖<br>送禮最有心意</div>
+      <div class="price">NT$ 000</div>
+      <div class="price-note">填入售價</div>
+    </div>
+  </a>
+
+  <!-- ===== 商品 003 ===== -->
+  <a class="card" href="product-03.html">
+    <div class="card-img">
+      <div class="card-img-inner">
+        <!-- <img src="images/product-03.jpg" alt="商品名稱"> -->
+        <div class="icon">🧸</div>
+        <div class="img-hint">放上商品圖片</div>
+      </div>
+      <div class="hover-label">查看商品 →</div>
+    </div>
+    <div class="card-body">
+      <div class="card-top"><div class="cat">寵物選品</div><div class="card-num">003</div></div>
+      <div class="name">商品名稱</div>
+      <div class="desc">填入商品描述<br>2–3 句話就夠</div>
+      <div class="price">NT$ 000</div>
+      <div class="price-note">填入售價</div>
+    </div>
+  </a>
+
+  <!-- ===== 商品 004 ===== -->
+  <a class="card" href="product-04.html">
+    <div class="card-img">
+      <div class="badge gold">客製化</div>
+      <div class="card-img-inner">
+        <!-- <img src="images/product-04.jpg" alt="商品名稱"> -->
+        <div class="icon">🎁</div>
+        <div class="img-hint">放上商品圖片</div>
+      </div>
+      <div class="hover-label">查看商品 →</div>
+    </div>
+    <div class="card-body">
+      <div class="card-top"><div class="cat">專屬客製</div><div class="card-num">004</div></div>
+      <div class="name">商品名稱</div>
+      <div class="desc">填入商品描述<br>2–3 句話就夠</div>
+      <div class="price">NT$ 000</div>
+      <div class="price-note">填入售價</div>
+    </div>
+  </a>
+
+  <!-- ===== 商品 005 ===== -->
+  <a class="card" href="product-05.html">
+    <div class="card-img">
+      <div class="card-img-inner">
+        <!-- <img src="images/product-05.jpg" alt="商品名稱"> -->
+        <div class="icon">🌿</div>
+        <div class="img-hint">放上商品圖片</div>
+      </div>
+      <div class="hover-label">查看商品 →</div>
+    </div>
+    <div class="card-body">
+      <div class="card-top"><div class="cat">寵物選品</div><div class="card-num">005</div></div>
+      <div class="name">商品名稱</div>
+      <div class="desc">填入商品描述<br>2–3 句話就夠</div>
+      <div class="price">NT$ 000</div>
+      <div class="price-note">填入售價</div>
+    </div>
+  </a>
+
+  <!-- ===== 商品 006 ===== -->
+  <a class="card" href="product-06.html">
+    <div class="card-img">
+      <div class="badge">NEW</div>
+      <div class="card-img-inner">
+        <!-- <img src="images/product-06.jpg" alt="商品名稱"> -->
+        <div class="icon">🫙</div>
+        <div class="img-hint">放上商品圖片</div>
+      </div>
+      <div class="hover-label">查看商品 →</div>
+    </div>
+    <div class="card-body">
+      <div class="card-top"><div class="cat">專屬客製</div><div class="card-num">006</div></div>
+      <div class="name">商品名稱</div>
+      <div class="desc">填入商品描述<br>2–3 句話就夠</div>
+      <div class="price">NT$ 000</div>
+      <div class="price-note">填入售價</div>
+    </div>
+  </a>
+
+</div>
+
+<div class="banner">
+  <div>
+    <div class="banner-title">CUSTOM <em>MADE</em><br>FOR YOU</div>
+    <p>客製化商品可印照片、名字、插圖<br>生日 · 情人節 · 畢業禮物都適合 · 詢問無壓力</p>
+  </div>
+  <a href="https://line.me/你的群組連結" target="_blank" class="banner-btn">LINE 詢問客製化</a>
+</div>
+
+<div class="footer">
+  <div class="footer-logo">AN<span>·</span>SELECT</div>
+  <div class="footer-links">
+    <a href="https://instagram.com/an_select" target="_blank">IG @an_select</a>
+    <a href="https://line.me/你的群組連結" target="_blank">LINE 社群</a>
+  </div>
+  <div class="footer-right">© AN Select<br>用心選，送對人</div>
+</div>
+
+</body>
+</html>

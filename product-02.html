@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>商品名稱｜AN Select</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@200;300;400&family=Noto+Sans+TC:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--black:#2e2b27;--white:#ffffff;--gold:#b8933a;--gray:#f7f5f2;--border:#ece8e2;--mid:#a09890;--light:#f9f7f4}
+body{background:var(--white);color:var(--black);font-family:'DM Sans','Noto Sans TC',sans-serif;min-height:100vh}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid var(--border);padding:0 48px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.18em;color:var(--black);text-decoration:none}
+.logo-dot{color:var(--gold)}
+.nav-menu{display:flex;gap:32px}
+.nav-menu a{font-size:11px;letter-spacing:0.12em;color:var(--mid);text-decoration:none;transition:color .2s}
+.nav-menu a:hover{color:var(--black)}
+.nav-action{font-size:11px;letter-spacing:0.1em;color:var(--black);border:1px solid var(--black);padding:6px 16px;cursor:pointer;transition:all .2s;background:transparent;font-family:'DM Sans',sans-serif;text-decoration:none}
+.nav-action:hover{background:var(--black);color:var(--white)}
+
+/* BREADCRUMB */
+.breadcrumb{padding:20px 48px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
+.breadcrumb a{font-size:11px;letter-spacing:0.08em;color:var(--mid);text-decoration:none}
+.breadcrumb a:hover{color:var(--black)}
+.breadcrumb span{font-size:11px;color:#d0c8be}
+.breadcrumb .current{font-size:11px;color:var(--black);letter-spacing:0.08em}
+
+/* PRODUCT LAYOUT */
+.product{display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:600px;border-bottom:1px solid var(--border)}
+
+/* 左：圖片區 */
+.product-gallery{background:var(--light);border-right:1px solid var(--border);display:flex;flex-direction:column}
+.main-img{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;min-height:480px;position:relative;overflow:hidden}
+.main-img img{width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0}
+.main-icon{font-size:80px;opacity:0.15}
+.main-img-hint{font-size:10px;letter-spacing:0.14em;color:#c0b8b0}
+.badge-product{position:absolute;top:24px;left:24px;font-size:9px;letter-spacing:0.14em;padding:5px 12px;background:var(--gold);color:var(--white)}
+
+/* 縮圖列 */
+.thumb-row{display:flex;gap:1px;background:var(--border);border-top:1px solid var(--border)}
+.thumb{flex:1;aspect-ratio:1;background:var(--gray);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:opacity .2s;font-size:20px;opacity:0.3}
+.thumb:hover,.thumb.on{opacity:1;background:var(--light)}
+.thumb img{width:100%;height:100%;object-fit:cover}
+
+/* 右：資訊區 */
+.product-info{padding:48px 52px;display:flex;flex-direction:column;gap:0}
+.product-cat{font-size:12px;letter-spacing:0.22em;color:var(--gold);margin-bottom:12px}
+.product-name{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:0.06em;color:var(--black);line-height:1.05;margin-bottom:8px}
+.product-sub{font-size:11px;color:var(--mid);letter-spacing:0.06em;margin-bottom:28px;font-weight:200}
+.divider{width:100%;height:1px;background:var(--border);margin-bottom:28px}
+
+.price-area{margin-bottom:28px}
+.price-label{font-size:9px;letter-spacing:0.18em;color:var(--mid);margin-bottom:6px}
+.price-big{font-family:'Bebas Neue',sans-serif;font-size:38px;letter-spacing:0.06em;color:var(--black)}
+.price-note{font-size:10px;color:#c0b8b0;margin-top:4px}
+
+/* 規格表 */
+.spec-table{margin-bottom:28px}
+.spec-title{font-size:9px;letter-spacing:0.18em;color:var(--mid);margin-bottom:12px}
+.spec-row{display:flex;padding:10px 0;border-bottom:1px solid var(--border);gap:16px}
+.spec-key{font-size:11px;color:var(--mid);letter-spacing:0.06em;min-width:80px;font-weight:300}
+.spec-val{font-size:11px;color:var(--black);letter-spacing:0.04em;line-height:1.6}
+
+/* 商品描述 */
+.desc-area{margin-bottom:32px}
+.desc-title{font-size:9px;letter-spacing:0.18em;color:var(--mid);margin-bottom:12px}
+.desc-text{font-size:12px;color:#7a7068;line-height:1.9;font-weight:200;letter-spacing:0.04em}
+
+/* 按鈕 */
+.btn-group{display:flex;flex-direction:column;gap:10px;margin-top:auto}
+.btn-buy{display:block;text-align:center;padding:16px;background:var(--black);color:var(--white);font-size:11px;letter-spacing:0.2em;text-decoration:none;transition:opacity .2s;font-family:'DM Sans',sans-serif}
+.btn-buy:hover{opacity:0.75}
+.btn-line{display:block;text-align:center;padding:14px;background:transparent;color:var(--black);font-size:11px;letter-spacing:0.16em;text-decoration:none;border:1px solid var(--border);transition:all .2s;font-family:'DM Sans',sans-serif}
+.btn-line:hover{border-color:var(--black)}
+.btn-note{font-size:9px;color:#c0b8b0;text-align:center;letter-spacing:0.08em;margin-top:4px}
+
+/* 相關商品 */
+.related{padding:52px 48px}
+.section-label{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.section-label span{font-size:10px;letter-spacing:0.18em;color:var(--gold)}
+.section-label::after{content:'';flex:1;height:0.5px;background:var(--border)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.r-card{background:var(--white);text-decoration:none;color:inherit;display:block}
+.r-card:hover .r-img-inner{transform:scale(1.03)}
+.r-img{aspect-ratio:1;background:var(--light);overflow:hidden}
+.r-img-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:32px;opacity:0.2;transition:transform .4s}
+.r-img-inner img{width:100%;height:100%;object-fit:cover;opacity:1}
+.r-body{padding:14px 16px}
+.r-cat{font-size:11px;letter-spacing:0.18em;color:var(--gold);margin-bottom:4px}
+.r-name{font-size:13px;color:var(--black);margin-bottom:4px}
+.r-price{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--black)}
+
+/* FOOTER */
+.footer{padding:36px 48px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border)}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.18em;color:#c8c0b8}
+.footer-logo span{color:var(--gold)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{font-size:10px;letter-spacing:0.1em;color:var(--mid);text-decoration:none}
+.footer-links a:hover{color:var(--black)}
+.footer-right{font-size:9px;color:#c8c0b8;letter-spacing:0.08em;line-height:1.8;text-align:right}
+
+@media(max-width:768px){
+  .nav{padding:0 20px}.nav-menu{display:none}
+  .breadcrumb{padding:16px 20px}
+  .product{grid-template-columns:1fr}
+  .product-gallery{border-right:none;border-bottom:1px solid var(--border)}
+  .main-img{min-height:300px}
+  .product-info{padding:28px 20px}
+  .related{padding:32px 20px}
+  .related-grid{grid-template-columns:repeat(2,1fr)}
+  .footer{padding:24px 20px;flex-direction:column;gap:16px;text-align:center}.footer-links{flex-wrap:wrap;justify-content:center}.footer-right{text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="logo" href="index.html">AN<span class="logo-dot">·</span>SELECT</a>
+  <div class="nav-menu">
+    <a href="index.html">全部商品</a>
+    <a href="index.html">A.N嚴選</a>
+    <a href="index.html">寵物選品</a>
+    <a href="index.html">專屬客製</a>
+  </div>
+  <a href="https://line.me/你的群組連結" target="_blank" class="nav-action">LINE 詢問</a>
+</nav>
+
+<!-- 麵包屑導覽 -->
+<div class="breadcrumb">
+  <a href="index.html">首頁</a>
+  <span>／</span>
+  <a href="index.html">專屬客製</a>
+  <span>／</span>
+  <span class="current">客製化馬克杯</span><!-- 換成商品名稱 -->
+</div>
+
+<div class="product">
+
+  <!-- 左：圖片 -->
+  <div class="product-gallery">
+    <div class="main-img">
+      <div class="badge-product">客製化</div><!-- 沒有標籤就刪掉這行 -->
+      <!-- 有圖片時取消下面註解，刪掉 icon 和 hint -->
+      <!-- <img src="images/product-01-main.jpg" alt="客製化馬克杯"> -->
+      <div class="main-icon">☕</div>
+      <div class="main-img-hint">放上主圖（建議 800x800px）</div>
+    </div>
+    <!-- 縮圖列（最多放4張，沒有就刪掉這整個 thumb-row） -->
+    <div class="thumb-row">
+      <div class="thumb on">☕</div><!-- 換成 <img src="..."> -->
+      <div class="thumb">☕</div>
+      <div class="thumb">☕</div>
+      <div class="thumb">☕</div>
+    </div>
+  </div>
+
+  <!-- 右：商品資訊 -->
+  <div class="product-info">
+    <div class="product-cat">專屬客製</div><!-- 換成商品分類 -->
+    <div class="product-name">客製化馬克杯</div><!-- 換成商品名稱 -->
+    <div class="product-sub">可印照片、文字或插圖，送禮最有心意</div><!-- 一句話描述 -->
+    <div class="divider"></div>
+
+    <div class="price-area">
+      <div class="price-label">售價</div>
+      <div class="price-big">NT$ 000</div><!-- 換成售價 -->
+      <div class="price-note">含運費 · 7-11 取貨付款</div>
+    </div>
+
+    <!-- 規格表：不需要的列直接刪掉 -->
+    <div class="spec-table">
+      <div class="spec-title">商品規格</div>
+      <div class="spec-row">
+        <div class="spec-key">尺寸</div>
+        <div class="spec-val">填入尺寸（例：高 10cm · 容量 350ml）</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">材質</div>
+        <div class="spec-val">填入材質（例：陶瓷）</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">顏色</div>
+        <div class="spec-val">填入顏色選項</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">客製說明</div>
+        <div class="spec-val">可印照片 / 文字 / 插圖<br>下單後請 LINE 提供圖檔</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">出貨時間</div>
+        <div class="spec-val">填入出貨天數（例：付款後 5–7 個工作天）</div>
+      </div>
+    </div>
+
+    <!-- 商品描述 -->
+    <div class="desc-area">
+      <div class="desc-title">商品介紹</div>
+      <div class="desc-text">
+        在這裡填入詳細的商品介紹，可以多寫一些。<br><br>
+        例如：這款馬克杯採用高品質陶瓷製作，手感溫潤，可客製化印製你喜歡的照片、名字或插圖。送給重要的人，是最有心意的禮物。<br><br>
+        適合場合：生日禮物、情人節、畢業紀念、朋友禮物。
+      </div>
+    </div>
+
+    <!-- 按鈕 -->
+    <div class="btn-group">
+      <!-- 把 href 換成賣貨便商品連結 -->
+      <a href="https://賣貨便商品連結" target="_blank" class="btn-buy">立即購買 · 7-11 賣貨便</a>
+      <!-- 把 href 換成 LINE 連結 -->
+      <a href="https://line.me/你的群組連結" target="_blank" class="btn-line">LINE 詢問 / 客製化洽談</a>
+      <div class="btn-note">結帳由 7-11 賣貨便處理 · 安全便利</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 相關商品 -->
+<div class="related">
+  <div class="section-label"><span>YOU MAY ALSO LIKE · 你可能也喜歡</span></div>
+  <div class="related-grid">
+
+    <a class="r-card" href="product-02.html">
+      <div class="r-img"><div class="r-img-inner">🫖</div></div>
+      <div class="r-body">
+        <div class="r-cat">專屬客製</div>
+        <div class="r-name">商品名稱</div>
+        <div class="r-price">NT$ 000</div>
+      </div>
+    </a>
+
+    <a class="r-card" href="product-03.html">
+      <div class="r-img"><div class="r-img-inner">🧸</div></div>
+      <div class="r-body">
+        <div class="r-cat">寵物選品</div>
+        <div class="r-name">商品名稱</div>
+        <div class="r-price">NT$ 000</div>
+      </div>
+    </a>
+
+    <a class="r-card" href="product-04.html">
+      <div class="r-img"><div class="r-img-inner">🎁</div></div>
+      <div class="r-body">
+        <div class="r-cat">專屬客製</div>
+        <div class="r-name">商品名稱</div>
+        <div class="r-price">NT$ 000</div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-logo">AN<span>·</span>SELECT</div>
+  <div class="footer-links">
+    <a href="https://instagram.com/an_select" target="_blank">IG @an_select</a>
+    <a href="https://line.me/你的群組連結" target="_blank">LINE 社群</a>
+  </div>
+  <div class="footer-right">© AN Select<br>用心選，送對人</div>
+</div>
+
+</body>
+</html>
